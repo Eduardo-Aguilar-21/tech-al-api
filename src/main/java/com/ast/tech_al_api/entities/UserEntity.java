@@ -50,4 +50,13 @@ public class UserEntity {
 
     @UpdateTimestamp
     private ZonedDateTime updatedAt;
+
+    public UserEntity(String username, String password, String email, UserRole role, UserStatus status, Organization organization) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+        this.status = status;
+        this.organization = organization;
+    }
 }

@@ -26,6 +26,7 @@ public class Organization {
     private String name;
 
     @OneToMany(mappedBy = "organization", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<GroupEntity> groups;
 
     @OneToMany(mappedBy = "organization", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -38,4 +39,8 @@ public class Organization {
 
     @UpdateTimestamp
     private ZonedDateTime updatedAt;
+
+    public Organization(String name) {
+        this.name = name;
+    }
 }

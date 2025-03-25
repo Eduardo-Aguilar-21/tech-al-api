@@ -3,6 +3,7 @@ package com.ast.tech_al_api.controllers;
 import com.ast.tech_al_api.entities.GroupEntity;
 import com.ast.tech_al_api.services.GroupService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GroupController {
     private final GroupService groupService;
+
 
     @GetMapping
     public ResponseEntity<List<GroupEntity>> getAllGroups() {
