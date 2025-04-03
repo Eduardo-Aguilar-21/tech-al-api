@@ -36,13 +36,13 @@ public class UserController {
         return ResponseEntity.ok(userService.getUserByEmail(email));
     }
 
-    @GetMapping("/by-organization/{organizationId}")
-    public ResponseEntity<List<UserEntity>> getUsersByOrganization(@PathVariable Long organizationId) {
+    @GetMapping("/by-organization")
+    public ResponseEntity<List<UserEntity>> getUsersByOrganization(@RequestParam Long organizationId) {
         return ResponseEntity.ok(userService.getUsersByOrganization(organizationId));
     }
 
-    @GetMapping("/by-group/{groupId}")
-    public ResponseEntity<List<UserEntity>> getUsersByGroup(@PathVariable Long groupId) {
+    @GetMapping("/by-group")
+    public ResponseEntity<List<UserEntity>> getUsersByGroup(@RequestParam Long groupId) {
         return ResponseEntity.ok(userService.getUsersByGroup(groupId));
     }
 

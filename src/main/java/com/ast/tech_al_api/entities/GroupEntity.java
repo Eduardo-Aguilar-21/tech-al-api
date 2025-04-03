@@ -30,7 +30,7 @@ public class GroupEntity {
     private Organization organization;
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
+    @JsonIgnore                                                        
     private List<UserEntity> users;
 
     @Column(nullable = false, updatable = false)

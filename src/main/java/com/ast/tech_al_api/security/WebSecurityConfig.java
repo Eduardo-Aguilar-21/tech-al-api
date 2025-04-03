@@ -61,7 +61,7 @@ public class WebSecurityConfig {
 
         JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(jwtUtils);
         jwtAuthenticationFilter.setAuthenticationManager(authenticationManager);
-        jwtAuthenticationFilter.setFilterProcessesUrl("/login");
+        jwtAuthenticationFilter.setFilterProcessesUrl("/api/login");
 
         HeaderWriter headerWriter = new StaticHeadersWriter("Access-Control-Allow-Origin", "http://telemetriaperu.com:3010", "http://localhost:3000", "http://192.168.1.232:3000");
 
@@ -71,10 +71,12 @@ public class WebSecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/login").permitAll();
+                    auth.requestMatchers("/api/login").permitAll();
                     auth.requestMatchers("/api/organizations/**").permitAll();
                     auth.requestMatchers("/api/users/**").permitAll();
                     auth.anyRequest().authenticated();
                 })
+                .addFilter(jwtAuthenticationFilter)
                 .addFilterBefore(authorizationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
