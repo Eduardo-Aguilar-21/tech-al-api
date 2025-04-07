@@ -5,6 +5,8 @@ import com.ast.tech_al_api.repositories.GroupRepository;
 import com.ast.tech_al_api.services.GroupService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,6 +25,16 @@ public class GroupServiceImpl implements GroupService {
     public GroupEntity getGroupById(Long id) {
         return groupRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Group not found with id: " + id));
+    }
+
+    @Override
+    public List<GroupEntity> findByOrganizationId(Long organizationId) {
+        return groupRepository.findByOrganizationId(organizationId);
+    }
+
+    @Override
+    public Page<GroupEntity> findByOrganizationId(Long organizationId, Pageable pageable) {
+        return groupRepository.findByOrganizationId(organizationId, pageable);
     }
 
     @Override

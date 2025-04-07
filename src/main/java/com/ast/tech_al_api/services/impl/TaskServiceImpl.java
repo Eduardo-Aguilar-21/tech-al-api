@@ -1,6 +1,6 @@
 package com.ast.tech_al_api.services.impl;
 
-import com.ast.tech_al_api.entities.Task;
+import com.ast.tech_al_api.entities.TaskEntity;
 import com.ast.tech_al_api.enums.TaskPriority;
 import com.ast.tech_al_api.enums.TaskStatus;
 import com.ast.tech_al_api.repositories.TaskRepository;
@@ -20,68 +20,69 @@ public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
 
     @Override
-    public List<Task> getAllTasks() {
+    public List<TaskEntity> getAllTasks() {
         return taskRepository.findAll();
     }
 
     @Override
-    public Task getTaskById(Long id) {
+    public TaskEntity getTaskById(Long id) {
         return taskRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Task not found with id: " + id));
     }
 
     @Override
-    public List<Task> findByAssignedUserId(Long userId) {
+    public List<TaskEntity> findByAssignedUserId(Long userId) {
         return taskRepository.findByAssignedUserId(userId);
     }
 
     @Override
-    public Page<Task> findByAssignedUserId(Long userId, Pageable pageable) {
+    public Page<TaskEntity> findByAssignedUserId(Long userId, Pageable pageable) {
         return taskRepository.findByAssignedUserId(userId, pageable);
     }
 
     @Override
-    public Page<Task> findByCreatedById(Long userId, Pageable pageable) {
+    public Page<TaskEntity> findByCreatedById(Long userId, Pageable pageable) {
         return taskRepository.findByCreatedById(userId, pageable);
     }
 
     @Override
-    public Page<Task> findByAssignedUserIsNullAndGroupId(Long groupId, Pageable pageable) {
+    public Page<TaskEntity> findByAssignedUserIsNullAndGroupId(Long groupId, Pageable pageable) {
         return taskRepository.findByAssignedUserIsNullAndGroupId(groupId, pageable);
     }
 
     @Override
-    public Page<Task> findByPriorityAndGroupId(TaskPriority taskPriority, Long groupId, Pageable pageable) {
+    public Page<TaskEntity> findByPriorityAndGroupId(TaskPriority taskPriority, Long groupId, Pageable pageable) {
         return taskRepository.findByPriorityAndGroupId(taskPriority, groupId, pageable);
     }
 
     @Override
-    public Page<Task> findByStatusAndGroupId(TaskStatus taskStatus, Long groupId, Pageable pageable) {
+    public Page<TaskEntity> findByStatusAndGroupId(TaskStatus taskStatus, Long groupId, Pageable pageable) {
         return taskRepository.findByStatusAndGroupId(taskStatus, groupId, pageable);
     }
 
     @Override
-    public Task saveTask(Task task) {
-        return taskRepository.save(task);
+    public TaskEntity saveTask(TaskEntity taskEntity) {
+        //System.out.println("Creado por " + taskEntity.getCreatedBy());
+        return taskRepository.save(taskEntity);
     }
 
     @Override
-    public Task updateTask(Long id, Task task) {
-        Task existingTask = taskRepository.findById(id)
+    public TaskEntity updateTask(Long id, TaskEntity taskEntity) {
+        TaskEntity existingTaskEntity = taskRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Task not found with id: " + id));
 
-        existingTask.setTitle(task.getTitle());
-        existingTask.setDescription(task.getDescription());
-        existingTask.setAssignedUser(task.getAssignedUser());
-        return taskRepository.save(existingTask);
+        existingTaskEntity.setTitle(taskEntity.getTitle());
+        existingTaskEntity.setDescription(taskEntity.getDescription());
+        existingTaskEntity.setAssignedUser(taskEntity.getAssignedUser());
+        return taskRepository.save(existingTaskEntity);
     }
 
     @Override
-    public Task assignTaskToUser(Long taskId, Long userId) {
-        Task task = taskRepository.findById(taskId)
+    public TaskEntity assignTaskToUser(Long taskId, Long userId) {
+        TaskEntity taskEntity = taskRepository.findById(taskId)
                 .orElseThrow(() -> new EntityNotFoundException("Task not found with id: " + taskId));
-        task.getAssignedUser().setId(userId);
-        return taskRepository.save(task);
+        taskEntity.getAssignedUser().setId(userId);
+        return taskRepository.save(taskEntity);
     }
 
     @Override

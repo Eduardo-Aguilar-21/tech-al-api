@@ -28,6 +28,10 @@ public class UserEntity {
 
     private String email;
 
+    private String name;
+
+    private String lastName;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 10)
     private UserRole role;
